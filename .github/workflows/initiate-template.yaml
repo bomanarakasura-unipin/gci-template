@@ -1,4 +1,4 @@
-name: initiating-gci
+name: Initializing New GCI
 run-name: Initiate from template
 on:
   push:

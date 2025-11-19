@@ -21,7 +21,7 @@ create_package_name() {
   echo "$input" | sed -r 's/-//g'
 }
 
-echo main() {
+main() {
   echo "Starting to initiating GCI project..."
 
   # Get repositoryu name
@@ -39,7 +39,7 @@ echo main() {
   # Renaming directory
   # Sort in reverse order to avoind renaming parent name before children
   find . -type d -name "*integration-name*" ! -path "./git/*" | sort -r | while read -r dir; do
-    # Get parent directory 
+    # Get parent directory
     parent=$(dirname "$dir")
     # Get folder name
     foldername=$(basename "$parent")
@@ -49,9 +49,11 @@ echo main() {
     new_dir="$parent/$new_foldername"
 
     if [ "$dir" != "$new_path" ]; then
-      echo "Renaming directory $dir => $new_dir" 
+      echo "Renaming directory $dir => $new_dir"
 
       mv "$dir" "$new_dir"
     fi
   done
 }
+
+main
