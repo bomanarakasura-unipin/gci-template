@@ -1,0 +1,8 @@
+package com.company.gci-parent-name
+
+@SpringBootApplication
+class integration-nameApplication
+
+fun main(args: Array<String>) {
+	runApplication<integration-nameApplication>(*args)
+}

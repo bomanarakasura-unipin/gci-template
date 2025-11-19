@@ -1,0 +1,75 @@
+package com.unipin.gci-parent-name.controller
+
+import com.unipin.gci-parent-name.annotation.LogExecution
+import com.unipin.gci-parent-name.configuration.variable.ErrorCode
+import com.unipin.gci-parent-name.exception.GenericException
+import com.unipin.gci-parent-name.model.request.CheckoutRequest
+import com.unipin.gci-parent-name.model.request.DeliveryRequest
+import com.unipin.gci-parent-name.model.request.InquiryRequest
+import com.unipin.gci-parent-name.model.request.RequiredFieldRequest
+import com.unipin.gci-parent-name.service.MaxNovelService
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping("/api/v1/parent-name")
+class integration-nameController(
+    private val childCodeService: ChildCodeService,
+) {
+
+    @LogExecution
+    @PostMapping("/required-field")
+    fun requiredField(
+        @RequestBody requiredFieldReq: RequiredFieldRequest,
+    ): ResponseEntity<*> {
+        return when (requiredFieldReq.childCode) {
+            "child_service" -> childCodeService.requiredField(requiredFieldReq)
+            else -> throw GenericException(
+                "Bad Request", ErrorCode.INVALID_PARAM, "Invalid childCode"
+            )
+        }
+    }
+
+    @LogExecution
+    @PostMapping("/inquiry")
+    fun inquiry(
+        @RequestBody inquiryReq: InquiryRequest,
+    ): ResponseEntity<*> {
+        return when (inquiryReq.childCode) {
+            "child_service" -> childCodeService.inquiry(inquiryReq)
+            else -> throw GenericException(
+                "Bad Request", ErrorCode.INVALID_PARAM, "Invalid childCode"
+            )
+        }
+    }
+
+    @LogExecution
+    @PostMapping("/checkout")
+    fun checkout(
+        @RequestBody checkoutReq: CheckoutRequest,
+    ): ResponseEntity<*> {
+        return when (checkoutReq.childCode) {
+            "child_service" -> childCodeService.checkout(checkoutReq)
+            else -> throw GenericException(
+                "Bad Request", ErrorCode.INVALID_PARAM, "Invalid childCode"
+            )
+        }
+    }
+
+    @LogExecution
+    @PostMapping("/delivery")
+    fun delivery(
+        @RequestBody deliveryReq: DeliveryRequest,
+    ): ResponseEntity<*> {
+        return when (deliveryReq.childCode) {
+            "child_service" -> childCodeService.delivery(deliveryReq)
+            else -> throw GenericException(
+                "Bad Request", ErrorCode.INVALID_PARAM, "Invalid childCode"
+            )
+        }
+    }
+
+}
