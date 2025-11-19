@@ -42,7 +42,7 @@ main() {
     # Get parent directory
     parent=$(dirname "$dir")
     # Get folder name
-    foldername=$(basename "$parent")
+    foldername=$(basename "$dir")
 
     # Replace dir name
     new_foldername=${foldername//"gci-parent-name"/"$integration_name"}
