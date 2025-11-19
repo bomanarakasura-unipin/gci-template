@@ -52,7 +52,7 @@ main() {
     if [ "$dir" != "$new_path" ]; then
       echo "Renaming directory $dir => $new_dir"
 
-      # mv "$dir" "$new_dir"
+      mv "$dir" "$new_dir"
     fi
   done
 
@@ -71,7 +71,7 @@ main() {
     if [ "$dir" != "$new_path" ]; then
       echo "Renaming directory $dir => $new_dir"
 
-      # mv "$dir" "$new_dir"
+      mv "$dir" "$new_dir"
     fi
   done
 
@@ -89,7 +89,7 @@ main() {
     if [ "$file" != "$new_filename" ]; then
       echo "Renaming filename $file => $new_path"
 
-      # mv "$file" "$new_path"
+      mv "$file" "$new_path"
     fi
   done
 
@@ -105,7 +105,7 @@ main() {
     # Check for gci-parent-name
     if grep -q "parent-name" "$game_file" 2>/dev/null; then
       echo "Updating parent-name on $game_file"
-      # sed -i "s/parent-name/$parent_name/g" "$game_file"
+      sed -i "s/parent-name/$parent_name/g" "$game_file"
     fi
 
   done

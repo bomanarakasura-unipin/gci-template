@@ -17,6 +17,8 @@ jobs:
 
   on_start:
     needs: get-current-step
+    if: >-
+      ${{ github.event.repository.is_template && needs.get-current-step.outputs.current-step == 0 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
