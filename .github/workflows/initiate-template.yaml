@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check current step
-        runs: |
+        run: |
           if [ "$(cat ./scripts/STEP)" != 0 ]; then
             echo "Step is not at Initializing state"
             exit 0
