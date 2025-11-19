@@ -5,15 +5,28 @@ on:
     branches:
       - main
 jobs:
-  running-script:
+  get-current-step:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Run initialization script
+      - name: Get current step
         run: |
-          echo "Start initialization..."
+          echo "current-step=$(cat ./scripts/STEP)" >> $GITHUB_OUTPUT
+
+  on_start:
+    needs: get-current-step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check current step
+        runs: |
+          if [ "$(cat ./scripts/STEP)" != 0 ]; then
+            echo "Step is not at Initializing state"
+            exit 0
+          else
+            echo "Free to go"
+          fi
 
       - name: Make script executable
         run: chmod +x ./scripts/initiating.sh
