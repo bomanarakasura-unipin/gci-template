@@ -45,7 +45,7 @@ main() {
     foldername=$(basename "$parent")
 
     # Replace dir name
-    new_foldername=${foldername//"integration-name"/"$integration_name"}
+    new_foldername=${foldername//"gci-parent-name"/"$integration_name"}
     new_dir="$parent/$new_foldername"
 
     if [ "$dir" != "$new_path" ]; then
