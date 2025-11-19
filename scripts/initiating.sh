@@ -37,6 +37,7 @@ main() {
   echo "Integration name : $integration_name"
 
   # Renaming directory
+  # Rename project main directoryu
   # Sort in reverse order to avoind renaming parent name before children
   find . -type d -name "*gci-parent-name*" ! -path "./git/*" | sort -r | while read -r dir; do
     # Get parent directory
@@ -45,7 +46,26 @@ main() {
     foldername=$(basename "$dir")
 
     # Replace dir name
-    new_foldername=${foldername//"gci-parent-name"/"$integration_name"}
+    new_foldername=${foldername//"gci-parent-name"/"$package_name"}
+    new_dir="$parent/$new_foldername"
+
+    if [ "$dir" != "$new_path" ]; then
+      echo "Renaming directory $dir => $new_dir"
+
+      # mv "$dir" "$new_dir"
+    fi
+  done
+
+  # Rename project main directoryu
+  # Sort in reverse order to avoind renaming parent name before children
+  find . -type d -name "*gci-parent-name*" ! -path "./git/*" | sort -r | while read -r dir; do
+    # Get parent directory
+    parent=$(dirname "$dir")
+    # Get folder name
+    foldername=$(basename "$dir")
+
+    # Replace dir name
+    new_foldername=${foldername//"gci-parent-name"/"$package_name"}
     new_dir="$parent/$new_foldername"
 
     if [ "$dir" != "$new_path" ]; then
@@ -72,6 +92,24 @@ main() {
       # mv "$file" "$new_path"
     fi
   done
+
+  # Start replacement
+  echo "Starting replacement in all files..."
+  find . -type f -path "./src" | while read -r game_file; do
+    # Check for gci-parent-name
+    if grep -q "gci-parent-name" "$game_file" 2>/dev/null; then
+      echo "Updating gci-parent-name on $game_file"
+      # sed -i "s/gci-parent-name/$package_name/g" "$game_file"
+    fi
+
+    # Check for gci-parent-name
+    if grep -q "parent-name" "$game_file" 2>/dev/null; then
+      echo "Updating parent-name on $game_file"
+      # sed -i "s/parent-name/$parent_name/g" "$game_file"
+    fi
+
+  done
+
 }
 
 main
