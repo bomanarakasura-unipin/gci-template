@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  get-current-step:
+  get_current_step:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,10 +15,10 @@ jobs:
         run: |
           echo "current-step=$(cat ./scripts/STEP)" >> $GITHUB_OUTPUT
 
-  on_start:
-    needs: get-current-step
+  start:
+    needs: get_current_step
     if: >-
-      ${{ !github.event.repository.is_template && needs.get-current-step.outputs.current-step == 0 }}
+      ${{ !github.event.repository.is_template && needs.get_current_step.outputs.current-step == 0 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,3 +38,25 @@ jobs:
 
       - name: Run script
         run: ./scripts/initiating.sh
+
+      - name: Clean up script and workflow
+        run: |
+          echo "Removing script and STEP files"
+          rm -f "./scripts/initiating.sh"
+          rm -f "./scripts/STEP"
+
+          echo "Removing workflow file"
+          rm -f "./.github/workflows/initiate-template.yaml"
+
+          echo "Make a commit"
+          git config user.name github-automation-bomsiwor[bot]
+          git config user.email github-automation@unipin.bot
+
+          echo "Stage changes"
+          git add -A
+
+          echo "Commit"
+          git commit -m "feat: initializing $REPO_NAME project"
+
+          echo "Pushing to main branch"
+          git push origin main

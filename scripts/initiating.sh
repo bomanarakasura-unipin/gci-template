@@ -95,7 +95,7 @@ main() {
 
   # Start replacement
   echo "Starting replacement in all files..."
-  find . -type f -path "*/src/*" | while read -r game_file; do
+  find . -type f ! -path "*/.git/*" | while read -r game_file; do
     # Check for gci-parent-name
     if grep -q "gci-parent-name" "$game_file" 2>/dev/null; then
       echo "Updating gci-parent-name on $game_file"
@@ -110,6 +110,20 @@ main() {
 
   done
 
+  echo "Make a commit"
+  git config user.name github-automation-bomsiwor[bot]
+  git config user.email github-automation@unipin.bot
+
+  echo "Stage changes"
+  git add -A
+
+  echo "Commit"
+  git commit -m "feat: initializing $REPO_NAME project"
+
+  echo "Pushing to main branch"
+  git push origin main
+
+  echo "Repository completely setup"
 }
 
 main
