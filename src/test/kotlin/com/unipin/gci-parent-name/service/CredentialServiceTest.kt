@@ -137,7 +137,7 @@ class CredentialServiceTest {
     }
 
     @Test
-    fun `getBloodKissCredential should return BloodKissCredential with correct values`() {
+    fun `getChildCodeCredential should return ChildCodeCredential with correct values`() {
         val credentialResponse = createMockCredentialResponse()
 
         every {
@@ -149,7 +149,7 @@ class CredentialServiceTest {
             )
         } returns credentialResponse
 
-        val result = credentialService.getBloodKissCredentials(UUID.fromString(TEST_CREDENTIAL_GUID))
+        val result = credentialService.getChildCodeCredentials(UUID.fromString(TEST_CREDENTIAL_GUID))
 
         assertNotNull(result)
         assertEquals(TEST_INQUIRY_URL, result.inquiryUrl)
@@ -158,7 +158,7 @@ class CredentialServiceTest {
     }
 
     @Test
-    fun `getBloodKissCredential should return empty values when credential details are empty`() {
+    fun `getChildCodeCredential should return empty values when credential details are empty`() {
         val emptyCredentialResponse = CredentialResponse(
             secretMsCredentials = CredentialResponse.SecretMsCredentials(
                 data = listOf(
@@ -180,7 +180,7 @@ class CredentialServiceTest {
             )
         } returns emptyCredentialResponse
 
-        val result = credentialService.getBloodKissCredentials(UUID.fromString(TEST_CREDENTIAL_GUID))
+        val result = credentialService.getChildCodeCredentials(UUID.fromString(TEST_CREDENTIAL_GUID))
 
         assertNotNull(result)
         assertEquals("", result.inquiryUrl)

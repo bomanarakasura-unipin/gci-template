@@ -2,7 +2,7 @@ package com.unipin.gci-parent-name.controller
 
 import com.ninjasquad.springmockk.MockkBean
 import com.unipin.gci-parent-name.model.response.DataResponse
-import com.unipin.gci-parent-name.service.BloodKissService
+import com.unipin.gci-parent-name.service.ChildCodeService
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,20 +15,20 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@WebMvcTest(StorytacoController::class)
+@WebMvcTest(integration-nameController::class)
 @TestPropertySource(properties = ["spring.cloud.config.enabled=false"])
-class StorytacoControllerTest {
+class integration-nameControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @MockkBean
-    private lateinit var bloodKissService: BloodKissService
+    private lateinit var childCodeService: ChildCodeService
 
     private companion object {
         private const val BASE_URL = "/api/v1/storytaco"
         private const val SUCCESS_STATUS = 1
         private const val ERROR_STATUS = 0
-        private const val VALID_CHILD_CODE = "blood_kiss"
+        private const val VALID_CHILD_CODE = "child_code"
         private const val TEST_CREDENTIAL_GUID = "0196edd3-789d-76a5-8dee-943c61f796a0"
         private const val TEST_USER_ID = "111111"
         private const val TEST_USERNAME = "unipin"
@@ -55,7 +55,7 @@ class StorytacoControllerTest {
         )
 
         // Mock service
-        every { bloodKissService.requiredField() } returns expectedResponse
+        every { childCodeService.requiredField() } returns expectedResponse
 
         // Action
         mockMvc.perform(
@@ -104,7 +104,7 @@ class StorytacoControllerTest {
         )
 
         // Mock service
-        every { bloodKissService.inquiry(any()) } returns expectedResponse
+        every { childCodeService.inquiry(any()) } returns expectedResponse
 
         // Action
         mockMvc.perform(
@@ -137,7 +137,7 @@ class StorytacoControllerTest {
         )
 
         // Mock service
-        every { bloodKissService.checkout(any()) } returns expectedResponse
+        every { childCodeService.checkout(any()) } returns expectedResponse
 
         // Action
         mockMvc.perform(
@@ -169,7 +169,7 @@ class StorytacoControllerTest {
         )
 
         // Mock service
-        every { bloodKissService.delivery(any()) } returns expectedResponse
+        every { childCodeService.delivery(any()) } returns expectedResponse
 
         // Action
         mockMvc.perform(

@@ -7,7 +7,7 @@ import com.github.f4b6a3.uuid.UuidCreator
 import com.ninjasquad.springmockk.MockkBean
 import com.unipin.gci-parent-name.configuration.variable.ErrorCode
 import com.unipin.gci-parent-name.exception.GameProviderException
-import com.unipin.gci-parent-name.model.bloodkiss.BloodKissCredentials
+import com.unipin.gci-parent-name.model.childcode.ChildCodeCredentials
 import com.unipin.gci-parent-name.model.request.CheckoutRequest
 import com.unipin.gci-parent-name.model.request.DeliveryRequest
 import com.unipin.gci-parent-name.model.request.InquiryRequest
@@ -31,7 +31,7 @@ import kotlin.collections.get
 
 @SpringBootTest(properties = ["spring.cloud.config.enabled=false"])
 @ActiveProfiles("test")
-class BloodKissServiceTest {
+class ChildCodeServiceTest {
     @MockkBean
     private lateinit var credentialService: CredentialService
 
@@ -39,13 +39,13 @@ class BloodKissServiceTest {
     private lateinit var httpService: HttpService
 
     @Autowired
-    private lateinit var bloodKissService: BloodKissService
+    private lateinit var childcodeService: ChildCodeService
 
     private val objectMapper = ObjectMapper()
 
     // Prepare predefined data to be initialized
     companion object {
-        private val TEST_CHILD_CODE:String = "blood_kiss"
+        private val TEST_CHILD_CODE:String = "child_code"
         private lateinit var TEST_CREDENTIAL_GUID:String
         private lateinit var TEST_USER_ID :String
         private lateinit var TEST_PRODUCT_ID :String
@@ -81,8 +81,8 @@ class BloodKissServiceTest {
         mockkObject(CommonUtil)
     }
 
-    fun setupCredential(): BloodKissCredentials {
-        return BloodKissCredentials(
+    fun setupCredential(): ChildCodeCredentials {
+        return ChildCodeCredentials(
             secretKey = "test",
             checkoutUrl = "test",
             inquiryUrl = "test",
@@ -177,7 +177,7 @@ class BloodKissServiceTest {
     fun `requiredField should return success`() {
         // Action
         // Call API programatically
-        val result = bloodKissService.requiredField()
+        val result = childcodeService.requiredField()
 
         // Assert
         // Assert status code
@@ -202,11 +202,11 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), JsonNode::class.java) } returns createInquiryResponse()
 
         // action
-        val result = bloodKissService.inquiry(request)
+        val result = childcodeService.inquiry(request)
 
         assertNotNull(result.body)
         // assert
@@ -224,12 +224,12 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), JsonNode::class.java) } returns createFailedInquiryResponse()
 
         // assert exception
         val exception = assertThrows<GameProviderException> {
-            bloodKissService.inquiry(request)
+            childcodeService.inquiry(request)
         }
 
         assertEquals(ErrorCode.INVALID_PARAM, exception.errorCode)
@@ -243,11 +243,11 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), JsonNode::class.java) } returns createInquiryResponse()
 
         // action
-        val result = bloodKissService.checkout(request)
+        val result = childcodeService.checkout(request)
 
         assertNotNull(result.body)
         // assert
@@ -270,12 +270,12 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), JsonNode::class.java) } returns createFailedCheckoutResponse()
 
         // assert exception
         val exception = assertThrows<GameProviderException> {
-            bloodKissService.checkout(request)
+            childcodeService.checkout(request)
         }
 
         assertEquals(ErrorCode.INVALID_PARAM, exception.errorCode)
@@ -288,11 +288,11 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), String::class.java) } returns createDeliveryResponse()
 
         // action
-        val result = bloodKissService.delivery(request)
+        val result = childcodeService.delivery(request)
 
         assertNotNull(result.body)
 
@@ -314,12 +314,12 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), String::class.java) } returns createFailedDeliveryResponse()
 
         // action
         val exception = assertThrows<GameProviderException> {
-            bloodKissService.delivery(request)
+            childcodeService.delivery(request)
         }
 
         assertEquals(ErrorCode.INVALID_PARAM, exception.errorCode)
@@ -332,12 +332,12 @@ class BloodKissServiceTest {
         val credential = setupCredential()
 
         // mock call to credential and HTTP service
-        every { credentialService.getBloodKissCredentials(any()) } returns credential
+        every { credentialService.getChildCodeCredentials(any()) } returns credential
         every { httpService.sendHttpPost(any(),any(), String::class.java) } returns "INVALID JSON"
 
         // action
         val exception = assertThrows<GameProviderException> {
-            bloodKissService.delivery(request)
+            childcodeService.delivery(request)
         }
 
         assertEquals(ErrorCode.INVALID_PARAM, exception.errorCode)
