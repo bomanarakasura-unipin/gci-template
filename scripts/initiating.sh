@@ -60,7 +60,7 @@ main() {
     # Get parent filename
     parent=$(dirname "$file")
     # Get file name
-    filename=$(basename "$parent")
+    filename=$(basename "$file")
 
     # Replace
     new_filename=${filename//"integration-name"/"$integration_name"}
