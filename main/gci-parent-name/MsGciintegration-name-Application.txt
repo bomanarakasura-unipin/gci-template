@@ -1,8 +1,8 @@
 package com.company.gci-parent-name
 
 @SpringBootApplication
-class integration-nameApplication
+class MsGciintegration-nameApplication
 
 fun main(args: Array<String>) {
-	runApplication<integration-nameApplication>(*args)
+	runApplication<MsGciintegration-nameApplication>(*args)
 }

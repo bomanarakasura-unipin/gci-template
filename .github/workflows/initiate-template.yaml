@@ -1,5 +1,5 @@
 name: initiating-gci
-run-name: ${{ github.actor }} is initating project
+run-name: Initiate from template
 on:
   push:
     branches:
@@ -14,3 +14,9 @@ jobs:
       - name: Run initialization script
         run: |
           echo "Start initialization..."
+
+      - name: Make script executable
+        run: chmod +x ./scripts/initiating.sh
+
+      - name: Run script
+        run: ./scripts/initiating.sh
