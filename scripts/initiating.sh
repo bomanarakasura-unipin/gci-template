@@ -6,7 +6,7 @@ set -e
 kebab_to_pascal() {
   local input="$1"
 
-  echo "$input" | sed -r 's/(^-)([a-z])/\U\2/g'
+  echo "$input" | sed -r 's/(^|-)([a-z])/\U\2/g'
 }
 
 extract_gci_parent_name() {
