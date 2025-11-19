@@ -95,7 +95,7 @@ main() {
 
   # Start replacement
   echo "Starting replacement in all files..."
-  find . -type f -path "./src" | while read -r game_file; do
+  find . -type f -path "*/src/*" | while read -r game_file; do
     # Check for gci-parent-name
     if grep -q "gci-parent-name" "$game_file" 2>/dev/null; then
       echo "Updating gci-parent-name on $game_file"
