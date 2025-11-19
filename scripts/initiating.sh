@@ -54,6 +54,24 @@ main() {
       # mv "$dir" "$new_dir"
     fi
   done
+
+  # Renaming all files
+  find . -type f -name "*integration-name*" ! -path "./git/*" | while read -r file; do
+    # Get parent filename
+    parent=$(dirname "$file")
+    # Get file name
+    filename=$(basename "$parent")
+
+    # Replace
+    new_filename=${filename//"integration-name"/"$integration_name"}
+    new_path="$parent/$new_filename"
+
+    if [ "$file" != "$new_filename" ]; then
+      echo "Renaming filename $file => $new_path"
+
+      # mv "$file" "$new_path"
+    fi
+  done
 }
 
 main
