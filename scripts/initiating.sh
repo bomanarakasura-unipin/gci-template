@@ -99,7 +99,7 @@ main() {
     # Check for gci-parent-name
     if grep -q "gci-parent-name" "$game_file" 2>/dev/null; then
       echo "Updating gci-parent-name on $game_file"
-      # sed -i "s/gci-parent-name/$package_name/g" "$game_file"
+      sed -i "s/gci-parent-name/$package_name/g" "$game_file"
     fi
 
     # Check for gci-parent-name
