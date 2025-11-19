@@ -38,7 +38,7 @@ main() {
 
   # Renaming directory
   # Sort in reverse order to avoind renaming parent name before children
-  find . -type d -name "*integration-name*" ! -path "./git/*" | sort -r | while read -r dir; do
+  find . -type d -name "*gci-parent-name*" ! -path "./git/*" | sort -r | while read -r dir; do
     # Get parent directory
     parent=$(dirname "$dir")
     # Get folder name
@@ -51,7 +51,7 @@ main() {
     if [ "$dir" != "$new_path" ]; then
       echo "Renaming directory $dir => $new_dir"
 
-      mv "$dir" "$new_dir"
+      # mv "$dir" "$new_dir"
     fi
   done
 }
