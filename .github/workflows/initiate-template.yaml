@@ -19,6 +19,9 @@ jobs:
     needs: get-current-step
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
       - name: Check current step
         run: |
           if [ "$(cat ./scripts/STEP)" != 0 ]; then
